@@ -13,7 +13,7 @@
 
 Overnight run on 857 files totalling 2.24 GiB of raw input, grouped here by source corpus. Compression-ratio columns are *bytes saved vs raw input*. `Top variant` is the inBEP variant that won on the most files in the corpus. `Encode time` and the allocation columns are measured against the **winning variant per file** (i.e. what `inBEP compress --variant fast` would spend if the structural predictor hit every file correctly — the floor on encode cost for the ratio achieved).
 
-| Corpus | Files | Total size | inBEP ratio | LZMA ratio | Δ vs LZMA | Top variant | Encode time | Avg alloc | Peak alloc |
+| Corpus | Files | Total size | inBEP ratio | LZMA ratio | Δ vs LZMA | Top variant | Encode time | Avg alloc | Mem Peak alloc |
 |---|---:|---:|---:|---:|---:|---|---:|---:|---:|
 | **Canterbury** | 14 | 13.3 MiB | 78.27% | 78.15% | +0.12 pp | TextCtx (86%) | 1m 17s | 372.0 MiB | 2.01 GiB |
 | **Calgary** | 18 | 3.1 MiB | 68.71% | 72.83% | -4.12 pp | TextCtx (89%) | 22.3 s | 125.2 MiB | 534.0 MiB |
