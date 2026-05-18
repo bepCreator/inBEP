@@ -22,8 +22,7 @@ Overnight run on 857 files totalling 2.24 GiB of raw input, grouped here by sour
 | **Lukas (TIF)** | 74 | 268.5 MiB | 68.69% | 65.41% | +3.29 pp | TextCtx (92%) | 1h 5m | 10.76 GiB | 40.06 GiB |
 | **DNA** | 11 | 1.2 MiB | 75.55% | 74.28% | +1.27 pp | NibCtx3 (91%) | 1.0 s | 2.8 MiB | 28.0 MiB |
 | **Protein** | 4 | 6.8 MiB | 47.40% | 49.42% | -2.02 pp | ProtNibCtx3 (100%) | 2.1 s | 5.1 MiB | 8.9 MiB |
-| **Entropy** | 8 | 118.7 MiB | 62.61% | 64.28% | -1.67 pp | TextCtx (100%) | 49m 27s | 29.37 GiB | 113.52 GiB |
-| **test files (singletons)** | 2 | 1.06 GiB | 67.57% | 71.24% | -3.66 pp | TextCtx (100%) | 2h 54m | 333.37 GiB | 341.81 GiB |
+| **Enwik9** | 2 | 1.06 GiB | 67.57% | 71.24% | -3.66 pp | TextCtx (100%) | 2h 54m | 333.37 GiB | 341.81 GiB |
 | **Total** | **857** | **2.24 GiB** | **68.26%** | **69.34%** | **-1.08 pp** | **StrideSplit (79%)** | **6h 40m** | **2.84 GiB** | **341.81 GiB** |
 
 **Reading the columns:**
