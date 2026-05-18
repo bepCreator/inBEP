@@ -2,8 +2,9 @@
 
 **Lossless general-purpose compressor for `.bep` files.**
 
-**Author:** Rich Wagner
-**Contact:** rich@newdawndata.com
+**Author:** Rich Wagner  
+**Contact:** rich@newdawndata.com  
+**Posted:** 5/18/2026  
 **License:** Apache 2.0
 
 ---
