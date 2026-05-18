@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>InBep</RootNamespace>
+    <AssemblyName>inBEP</AssemblyName>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <!--
+    Optional embedded nibble-prior tables.
+
+    nibble_prior_k12.bin       — used by NibbleContextOrder3Bep /
+                                 ProteinNibbleContextOrder3Bep when called as a
+                                 top-level coder. K=12 (4096-context) static
+                                 prior, ~128 KB binary growth.
+
+    textctx_nibble_prior_k12.bin — used by NibbleContextOrder3Bep when called as
+                                   a post-coder over BEP-archive bytes produced
+                                   by TextPipelineCtxBep (useTextCtxPrior=true).
+                                   Same format, different training distribution.
+                                   ~128 KB binary growth.
+
+    Both are optional: when absent, NibCtx3 falls back to a bare init and the
+    affected encode paths emit VERSION_LEGACY archives instead of using the
+    static prior. inBEP ships these conditionally so a clean clone builds
+    without them.
+  -->
+  <ItemGroup>
+    <EmbeddedResource Include="nibble_prior_k12.bin"        Condition="Exists('nibble_prior_k12.bin')" />
+    <EmbeddedResource Include="textctx_nibble_prior_k12.bin" Condition="Exists('textctx_nibble_prior_k12.bin')" />
+  </ItemGroup>
+
+</Project>
