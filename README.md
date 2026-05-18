@@ -9,6 +9,36 @@
 
 ---
 
+## Corpus benchmark summary
+
+Overnight run on 857 files totalling 2.24 GiB of raw input, grouped here by source corpus. Compression-ratio columns are *bytes saved vs raw input*. `Top variant` is the inBEP variant that won on the most files in the corpus. `Encode time` and the allocation columns are measured against the **winning variant per file** (i.e. what `inBEP compress --variant fast` would spend if the structural predictor hit every file correctly — the floor on encode cost for the ratio achieved).
+
+| Corpus | Files | Total size | inBEP ratio | LZMA ratio | Δ vs LZMA | Top variant | Encode time | Avg alloc | Peak alloc |
+|---|---:|---:|---:|---:|---:|---|---:|---:|---:|
+| **Canterbury** | 14 | 13.3 MiB | 78.27% | 78.15% | +0.12 pp | TextCtx (86%) | 1m 17s | 372.0 MiB | 2.01 GiB |
+| **Calgary** | 18 | 3.1 MiB | 68.71% | 72.83% | -4.12 pp | TextCtx (89%) | 22.3 s | 125.2 MiB | 534.0 MiB |
+| **Silesia** | 12 | 202.1 MiB | 74.78% | 76.89% | -2.11 pp | TextCtx (92%) | 53m 59s | 22.06 GiB | 150.11 GiB |
+| **Lukas (DICOM)** | 714 | 598.3 MiB | 68.22% | 66.13% | +2.10 pp | StrideSplit (95%) | 55m 48s | 670.4 MiB | 19.90 GiB |
+| **Lukas (TIF)** | 74 | 268.5 MiB | 68.69% | 65.41% | +3.29 pp | TextCtx (92%) | 1h 5m | 10.76 GiB | 40.06 GiB |
+| **DNA** | 11 | 1.2 MiB | 75.55% | 74.28% | +1.27 pp | NibCtx3 (91%) | 1.0 s | 2.8 MiB | 28.0 MiB |
+| **Protein** | 4 | 6.8 MiB | 47.40% | 49.42% | -2.02 pp | ProtNibCtx3 (100%) | 2.1 s | 5.1 MiB | 8.9 MiB |
+| **Entropy** | 8 | 118.7 MiB | 62.61% | 64.28% | -1.67 pp | TextCtx (100%) | 49m 27s | 29.37 GiB | 113.52 GiB |
+| **test files (singletons)** | 2 | 1.06 GiB | 67.57% | 71.24% | -3.66 pp | TextCtx (100%) | 2h 54m | 333.37 GiB | 341.81 GiB |
+| **Total** | **857** | **2.24 GiB** | **68.26%** | **69.34%** | **-1.08 pp** | **StrideSplit (79%)** | **6h 40m** | **2.84 GiB** | **341.81 GiB** |
+
+**Reading the columns:**
+
+- **inBEP ratio / LZMA ratio** — bytes saved vs raw input (higher is better).
+- **Δ vs LZMA** — percentage-point difference in saved-bytes ratio. Positive means inBEP recovered more bytes than LZMA preset 6 on that corpus.
+- **Top variant** — which inBEP variant won the most files in the corpus, with its win share in parentheses. A high percentage (>80%) signals a clean structural fingerprint; mixed percentages mean `--variant auto` is doing real work picking different winners across the corpus.
+- **Encode time** — wall-clock summed across all files in the corpus, using only the winning variant per file. Multiply by roughly 5× for a realistic `--variant auto` budget on the same corpus (auto tries all five and keeps the smallest).
+- **Avg alloc / Peak alloc** — *cumulative* managed-heap bytes allocated during the winning encode (the `GC.GetTotalAllocatedBytes` delta around the call, with a `GC.Collect`-settle immediately before each measurement). This is allocation throughput, **not** peak working-set memory — for an encoder that rebuilds buffers across many internal passes the cumulative figure runs an order of magnitude (or two) above the actual peak RSS. Read it as a measure of allocator pressure / GC load, not as the RAM you need to run the codec.
+
+Measured on Windows 11, .NET 8, single-thread encode. Decode times and decode allocation are tracked separately and are typically an order of magnitude lighter than encode on these workloads.
+
+
+---
+
 ## What this is
 
 inBEP is the practical, file-level lossless compressor built on top of the
