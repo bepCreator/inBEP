@@ -57,7 +57,7 @@ inter-variant ambiguity — each `.bep` carries unambiguous self-identification.
 inBEP targets .NET 8. Clone, restore, build:
 
 ```
-git clone <repo-url> inBEP
+git clone https://github.com/bepCreator/inBEP inBEP
 cd inBEP
 dotnet build -c Release
 ```
@@ -517,7 +517,7 @@ Requirements:
   dependencies, used only by the reference-codec research path, are gone)
 
 ```
-git clone <repo-url> inBEP
+git clone https://github.com/bepCreator/inBEP inBEP
 cd inBEP
 dotnet build -c Release
 ```
